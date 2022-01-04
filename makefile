@@ -4,7 +4,8 @@ SRC = src
 BUILDDIR = build/
 
 all:
-	$(CC) $(CFLAGS) $(SRC)/main.cpp  $(SRC)/GameWindow.cpp $(SRC)/Game.cpp -o 0xFFBB.out
+	$(CC) $(CFLAGS) $(SRC)/main.cpp  $(SRC)/GameWindow.cpp $(SRC)/Game.cpp $(SRC)/Input.cpp \
+	-o 0xFFBB.out
 
 dir:
 	mkdir -p $(BUILDDIR)

@@ -6,32 +6,60 @@
 #include <SDL2/SDL.h>
 #include "GameWindow.h"
 #include "Game.h"
+#include "Input.h"
 
-Game::Game()
+namespace
+{
+    const int SET_FRAME_RATE = 60;
+    const int MAX_FRAME_LIFETIME_MS = 1000 / SET_FRAME_RATE;
+}
+
+Game::Game(void)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
     this->gameLoop();
 }
 
-Game::~Game()
+Game::~Game(void)
 {
 }
 
-void Game::gameLoop()
+void Game::gameLoop(void)
 {
     GameWindow gameWindow;
+    Input input;
     SDL_Event eventHandler;
+
+    int LAST_FRAME_UPDATE = SDL_GetTicks();
 
     while (true)
     {
+        input.refreshFrame();
+
         if (SDL_PollEvent(&eventHandler))
         {
             switch (eventHandler.type)
             {
             case SDL_QUIT:
                 return;
+
+            case SDL_KEYDOWN:
+                if (eventHandler.key.repeat == false)
+                {
+                    input.keyPressEvent(eventHandler);
+                    input.execute_key(eventHandler.key.keysym.scancode);
+                }
+                return;
+
+            case SDL_KEYUP:
+                input.keyReleaseEvent(eventHandler);
+                return;
             }
         }
+        const int CURRENT_TIME_MS = SDL_GetTicks();
+        int ELAPSED_TIME_MS = CURRENT_TIME_MS - LAST_FRAME_UPDATE;
+        this->gameTick(std::min(ELAPSED_TIME_MS, MAX_FRAME_LIFETIME_MS));
+        LAST_FRAME_UPDATE = CURRENT_TIME_MS;
     }
 }
 

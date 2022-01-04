@@ -6,11 +6,11 @@ class GameWindow;
 class Game
 {
 public:
-    Game();
-    ~Game();
+    Game(void);
+    ~Game(void);
 
 private:
-    void gameLoop();
+    void gameLoop(void);
     void draw(GameWindow &gameWindow);
     void gameTick(float elapsedTime);
 };

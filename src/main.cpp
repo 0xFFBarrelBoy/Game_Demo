@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include "Game.h"
 
-int main()
+int main(void)
 {
     Game game;
     return 0;

@@ -8,8 +8,8 @@ struct SDL_Renderer;
 class GameWindow
 {
 public:
-    GameWindow();
-    ~GameWindow();
+    GameWindow(void);
+    ~GameWindow(void);
 
 private:
     SDL_Window *_window;
