@@ -30,6 +30,8 @@ void Game::gameLoop(void)
     Input input;
     SDL_Event eventHandler;
 
+    this->_player = Sprite(gameWindow, "content/sprites/NpcMiza.png", 0, 0, 16, 16, 100, 100);
+
     int LAST_FRAME_UPDATE = SDL_GetTicks();
 
     while (true)
@@ -60,11 +62,17 @@ void Game::gameLoop(void)
         int ELAPSED_TIME_MS = CURRENT_TIME_MS - LAST_FRAME_UPDATE;
         this->gameTick(std::min(ELAPSED_TIME_MS, MAX_FRAME_LIFETIME_MS));
         LAST_FRAME_UPDATE = CURRENT_TIME_MS;
+
+        this->draw(gameWindow);
     }
 }
 
 void Game::draw(GameWindow &gameWindow)
 {
+    gameWindow.clearGameWindow();
+
+    this->_player.draw(gameWindow, 100, 100);
+    gameWindow.flip();
 }
 
 void Game::gameTick(float elapsedTime)

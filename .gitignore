@@ -31,7 +31,11 @@
 *.out
 *.app
 
+# Sprites
+*.png
+
 # Folders & Files
 .vscode
 .DS_Store
 *.plist
+
